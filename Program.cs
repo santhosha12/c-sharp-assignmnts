@@ -1,31 +1,108 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace assign1
+namespace LitwareLib
 {
-    internal class Program
+    class Employee
     {
-        static void Main(string[] args)
+        private int Empno;
+        private string Empname;
+        private double salary;
+        private double HRA;
+        private double TA;
+        private double DA;
+        private double PF;
+        private double TDS;
+        private double NetSalary;
+        private double GrossSalary;
+        public string EmpName
         {
-            Console.WriteLine("Please entert two numbers to add substract multiply and divide");
-            int num1, num2 = 0;
-            int add, substract, multiply, divide = 0;
-            Console.WriteLine("Enter first number:");
-            num1 = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Enter second number:");
-            num2 = Convert.ToInt32(Console.ReadLine());
-            add = num1 + num2;
-            substract = num1 - num2;
-            multiply = num1 * num2;
-            divide = num1 / num2;
-            Console.WriteLine("results");
-            Console.WriteLine("addition {0}", add);
-            Console.WriteLine("susbtraction {0}", substract);
-            Console.WriteLine("multiplication {0}", multiply);
-            Console.WriteLine("division {0}", divide);
-            Console.ReadLine();
+            get
+            {
+                return Empname;
+            }
+            set
+            {
+                Empname = value;
+            }
+        }
+        public int EmpNo
+        {
+            get { return Empno; }
+            set { Empno = value; }
+        }
+        public void Sal()
+        {
+            salary = Convert.ToDouble(Console.ReadLine());
+        }
+        public void Calc()
+        {
+            if (salary <= 5000)
+            {
+                HRA = 10 * (salary / 100);
+                TA = 5 * (salary / 100);
+                DA = 15 * (salary / 100);
+            }
+            else if (salary < 10000)
+            {
+                HRA = 15 * (salary / 100);
+                TA = 10 * (salary / 100);
+                DA = 20 * (salary / 100);
+            }
+            else if (salary < 15000)
+            {
+                HRA = 20 * (salary / 100);
+                TA = 15 * (salary / 100);
+                DA = 25 * (salary / 100);
+            }
+            else if (salary < 20000)
+            {
+                HRA = 25 * (salary / 100);
+                TA = 20 * (salary / 100);
+                DA = 30 * (salary / 100);
+            }
+            else
+            {
+                HRA = 30 * (salary / 100);
+                TA = 25 * (salary / 100);
+                DA = 35 * (salary / 100);
+            }
+            GrossSalary = salary + HRA + TA + DA;
+        }
+        public void CalculateSalary()
+        {
+            PF = 10 * (GrossSalary / 100);
+            TDS = 18 * (GrossSalary / 100);
+            NetSalary = GrossSalary - (PF + TDS);
+        }
+        public void Display()
+        {
+            Console.WriteLine("employee no:" + Empno);
+            Console.WriteLine("employee name:" + Empname);
+            Console.WriteLine("employee salary:" + salary);
+            Console.WriteLine("House rent allowances:" + HRA);
+            Console.WriteLine("traveling allownces:{0}" + TA);
+            Console.WriteLine("DA:{0}" + DA);
+            Console.WriteLine("TDS:{0}" + TDS);
+            Console.WriteLine("NetSalary:" + NetSalary);
+            Console.WriteLine("Gross Salary:" + GrossSalary);
+        }
+        public static void Main()
+        {
+            Employee emp = new Employee();
+            Console.WriteLine("enter employee no:");
+            emp.EmpNo = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("enter employee name:");
+            emp.EmpName = Console.ReadLine();
+            Console.WriteLine("enter employee salary:");
+            emp.Sal();
+            emp.Calc();
+            emp.CalculateSalary();
+            emp.Display();
+            Console.ReadKey();
         }
     }
 }
