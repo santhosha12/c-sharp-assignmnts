@@ -1,109 +1,109 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
-namespace LitwareLib
-{
-    class Employee
+
+         
+ namespace Assignment3
     {
-        private int Empno;
-        private string Empname;
-        private double salary;
-        private double HRA;
-        private double TA;
-        private double DA;
-        private double PF;
-        private double TDS;
-        private double NetSalary;
-        private double GrossSalary;
-        public string EmpName
+        public interface Iprintable
         {
-            get
-            {
-                return Empname;
-            }
-            set
-            {
-                Empname = value;
-            }
+            void Print();
         }
-        public int EmpNo
+        public class EmployeeManagementSystem : Iprintable
         {
-            get { return Empno; }
-            set { Empno = value; }
-        }
-        public void Sal()
-        {
-            salary = Convert.ToDouble(Console.ReadLine());
-        }
-        public void Calc()
-        {
-            if (salary <= 5000)
+            public int Salary;
+            public void Print()
             {
-                HRA = 10 * (salary / 100);
-                TA = 5 * (salary / 100);
-                DA = 15 * (salary / 100);
+                Console.WriteLine("enter the first name of the employee:");
+                string FirstName = Console.ReadLine();
+                Console.WriteLine("enter last name of the employee:");
+                string LastName = Console.ReadLine();
+                Console.WriteLine("Enter employee Salary :");
+                Salary = Convert.ToInt32(Console.ReadLine());
+                if (Salary <= 0 || Salary > 20000)
+                {
+                    Console.WriteLine("please enter a valid value again from starting....THANK YOU");
+                    Print();
+                }
+                else if (Salary < 5000)
+                {
+                    Console.WriteLine("Employee Name : {0}", FirstName + LastName);
+                    Console.WriteLine("Net Salary : {0}", Salary);
+                    int PF = 8 * (Salary / 100);
+                    Console.WriteLine("Gross Salary : {0}", Salary + PF);
+                }
+                else if (Salary > 5000 && Salary < 10000)
+                {
+                    Console.WriteLine("Employee Name : {0}", FirstName + LastName);
+                    Console.WriteLine("Net Salary : {0}", Salary);
+                    int PF = 9 * (Salary / 100);
+                    Console.WriteLine("Gross Salary : {0}", Salary + PF);
+                }
+                else if (Salary > 10000 && Salary < 20000)
+                {
+                    Console.WriteLine("Employee Name : {0}", FirstName + LastName);
+                    Console.WriteLine("Net Salary : {0}", Salary);
+                    int PF = 10 * (Salary / 100);
+                    Console.WriteLine("Gross Salary : {0}", Salary + PF);
+                }
             }
-            else if (salary < 10000)
+            public class Manager : EmployeeManagementSystem
             {
-                HRA = 15 * (salary / 100);
-                TA = 10 * (salary / 100);
-                DA = 20 * (salary / 100);
+                private double PetrolAllowance;
+                private double FoodAllowance;
+                private double OtherAllowance;
+                public void Calculate()
+                {
+                    Console.WriteLine("Enter Salary of Manager:");
+                    Salary = Convert.ToInt32(Console.ReadLine());
+                    PetrolAllowance = 8 * (Salary / 100);
+                    FoodAllowance = 13 * (Salary / 100);
+                    OtherAllowance = 3 * (Salary / 100);
+                    Console.WriteLine("GROSS SALARY OF MANAGER = {0}", Salary + PetrolAllowance + FoodAllowance + OtherAllowance);
+                }
+                public void CalculateSalary()
+                {
+                    Console.WriteLine("NET SALARY OF MANAGER = {0}", Salary);
+                }
             }
-            else if (salary < 15000)
+            public class MarketingExecutive : EmployeeManagementSystem
             {
-                HRA = 20 * (salary / 100);
-                TA = 15 * (salary / 100);
-                DA = 25 * (salary / 100);
+                private int KiloMeterTravel;
+                private int TourAllowances;
+                private int TelephoneAllowances;
+                public void Calculate()
+                {
+                    Console.WriteLine("Enter Marketing Executive Salary:");
+                    Salary = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter kilomter travel by Marketing EXecutive:");
+                    KiloMeterTravel = Convert.ToInt32(Console.ReadLine());
+                    TourAllowances = KiloMeterTravel * 5;
+                    TelephoneAllowances = 1000;
+                    Console.WriteLine("Gross Salary of marketing executive: {0}", Salary + KiloMeterTravel + TourAllowances + TelephoneAllowances);
+                }
+                public void CalculateSalary()
+                {
+                    Console.WriteLine("Net salary of marketing exective:{0}", +Salary);
+                }
             }
-            else if (salary < 20000)
+            public class Q1
             {
-                HRA = 25 * (salary / 100);
-                TA = 20 * (salary / 100);
-                DA = 30 * (salary / 100);
+                public static void Main()
+                {
+                    Iprintable IP = new EmployeeManagementSystem();
+                    IP.Print();
+                    Manager manager = new Manager();
+                    manager.Calculate();
+                    manager.CalculateSalary();
+                    MarketingExecutive ME = new MarketingExecutive();
+                    ME.Calculate();
+                    ME.CalculateSalary();
+                    Console.ReadKey();
+                }
             }
-            else
-            {
-                HRA = 30 * (salary / 100);
-                TA = 25 * (salary / 100);
-                DA = 35 * (salary / 100);
-            }
-            GrossSalary = salary + HRA + TA + DA;
-        }
-        public void CalculateSalary()
-        {
-            PF = 10 * (GrossSalary / 100);
-            TDS = 18 * (GrossSalary / 100);
-            NetSalary = GrossSalary - (PF + TDS);
-        }
-        public void Display()
-        {
-            Console.WriteLine("employee no:" + Empno);
-            Console.WriteLine("employee name:" + Empname);
-            Console.WriteLine("employee salary:" + salary);
-            Console.WriteLine("House rent allowances:" + HRA);
-            Console.WriteLine("traveling allownces:{0}" + TA);
-            Console.WriteLine("DA:{0}" + DA);
-            Console.WriteLine("TDS:{0}" + TDS);
-            Console.WriteLine("NetSalary:" + NetSalary);
-            Console.WriteLine("Gross Salary:" + GrossSalary);
-        }
-        public static void Main()
-        {
-            Employee emp = new Employee();
-            Console.WriteLine("enter employee no:");
-            emp.EmpNo = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("enter employee name:");
-            emp.EmpName = Console.ReadLine();
-            Console.WriteLine("enter employee salary:");
-            emp.Sal();
-            emp.Calc();
-            emp.CalculateSalary();
-            emp.Display();
-            Console.ReadKey();
         }
     }
-}
 
